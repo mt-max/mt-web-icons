@@ -96,7 +96,7 @@ async function generateIconComponent() {
   const componentStatements = icomoonJsonDefinition.map(({ properties: { name } }) => {
     const componentName = toPascalCase(name);
     const componentPath = path.join(FOLDER.REACT, componentName);
-    return { name: componentName, path: path.relative(iconComponendFolder, componentPath) };
+    return { name: componentName, path: path.relative(path.join(iconComponendFolder, 'cjs'), componentPath) };
   });
 
   // Generats the IconComponent source
@@ -108,14 +108,19 @@ async function generateIconComponent() {
     { rmWhitespace: true }
   );
   // Transpiles `IconComponent` JSX => JS with Babel
-  const iconComponentSource = await babel.transformAsync(iconComponentTemplate, BABEL_SETTINGS);
-  fs.outputFile(path.join(iconComponendFolder, 'index.js'), iconComponentSource.code);
+  const iconComponentSourceESM = await babel.transformAsync(iconComponentTemplate, BABEL_SETTINGS);
+  fs.outputFile(path.join(iconComponendFolder, 'esm', 'index.js'), iconComponentSourceESM.code);
+
+  const es5BabelSettings = { ...BABEL_SETTINGS, presets: [['@babel/preset-env']] };
+  const iconComponentSourceCJS = await babel.transformAsync(iconComponentTemplate, es5BabelSettings);
+  fs.outputFile(path.join(iconComponendFolder, 'cjs', 'index.js'), iconComponentSourceCJS.code);
 
   // Generates type definitions for the `IconComponent`
   const typeDefinition = await ejs.renderFile(path.join(FOLDER.TEMPLATES, 'IconComponentTypeDefinition.d.ts'), {
     components: componentStatements
   });
-  fs.outputFile(path.join(iconComponendFolder, 'index.d.ts'), typeDefinition);
+  fs.outputFile(path.join(iconComponendFolder, 'cjs', 'index.d.ts'), typeDefinition);
+  fs.outputFile(path.join(iconComponendFolder, 'esm', 'index.d.ts'), typeDefinition);
 }
 
 generateIconComponent();
