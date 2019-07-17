@@ -1,6 +1,6 @@
 {
   "name": "mt-web-icons",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "private": true,
   "main": "react/Icon/cjs/index.js",
   "module": "react/Icon/esm/index.js",
@@ -39,7 +39,6 @@
     "ejs": "^2.6.2",
     "fs-extra": "^8.0.1",
     "react": "^16.8.6",
-    "svgo": "^1.2.2",
-    "type-fest": "^0.5.2"
+    "svgo": "^1.2.2"
   }
 }
