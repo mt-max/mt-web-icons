@@ -25,24 +25,34 @@ yarn build
 
 # How to use it
 
-### Icon component with icon name:
+### Icon component:
 
 ```javascript
-import React from 'react';
-import { ReactElement } from 'react';
-const Icon = 'mt-web-icons';
+import React, { ReactElement } from 'react';
+import Icon from 'mt-web-icons';
 
 export default function IconAuto(): ReactElement {
   return <Icon name="auto" width={100} height={100} fill="#ffffff" />;
 }
 ```
 
+### Icon with ES6 Module:
+
+```javascript
+import React, { ReactElement } from 'react';
+// Imports from specific ESM module folder
+import Icon from 'mt-web-icons/react/Icon/esm';
+
+export default function Icon(): ReactElement {
+  return <Auto width={100} height={100} fill="#ffffff" />;
+}
+```
+
 ### Icon with defined placeholder and fallback for suspence:
 
 ```javascript
-import React from 'react';
-import { ReactElement } from 'react';
-const Icon = 'mt-web-icons';
+import React, { ReactElement } from 'react';
+import Icon from 'mt-web-icons';
 
 export default function IconAuto(): ReactElement {
   return <Icon name="Auto" placeholder={null} fallback={<div />} />;
@@ -52,8 +62,7 @@ export default function IconAuto(): ReactElement {
 ### Specific Icon:
 
 ```javascript
-import React from 'react';
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 import { Auto } from 'mt-web-icons';
 
 export default function Icon(): ReactElement {
